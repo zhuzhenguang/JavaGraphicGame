@@ -1,0 +1,38 @@
+<project basedir="." default="run" name="JavaGraphicGame">
+    <target name="init">
+        <property name="name" value="JavaGraphicGame" />
+        <property name="src" value="${basedir}/src/main/java" />
+        <property name="bin" value="${basedir}/bin" />
+        <property name="lib" value="${basedir}/lib" />
+
+        <path id="run_classpath">
+            <pathelement location="${bin}" />
+            <pathelement path="${lib}/substance.jar" />
+            <pathelement path="${lib}/trident.jar" />
+        </path>
+
+        <path id="compile_classpath">
+            <fileset dir="${lib}">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${bin}" />
+    </target>
+
+    <target name="build" depends="init,prepare">
+        <javac srcdir="${src}" destdir="${bin}" includeantruntime="on" encoding="utf-8">
+            <classpath refid="compile_classpath">
+            </classpath> 
+        </javac>
+    </target>
+
+    <target name="run" depends="build">
+        <java classname="org.game.chess.App" fork="true">
+            <classpath refid="run_classpath">
+            </classpath> 
+        </java>
+    </target>
+</project>
